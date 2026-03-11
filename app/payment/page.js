@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = "force-dynamic";
+
 import { useSearchParams, useRouter } from "next/navigation"
 
 export default function PaymentPage(){
@@ -9,10 +11,6 @@ export default function PaymentPage(){
 
   const amount = params.get("amount")
   const type = params.get("type")
-
-  const handleCancel = () => {
-    router.push("/")
-  }
 
   return(
 
@@ -25,28 +23,24 @@ export default function PaymentPage(){
         </h2>
 
         <p className="text-lg mb-2">
-          Amount: <span className="font-semibold">${amount}</span>
+          Amount: ${amount}
         </p>
 
-        <p className="text-lg mb-8">
-          Type: <span className="font-semibold">
-            {type === "monthly" ? "Monthly" : "One Time"}
-          </span>
+        <p className="text-lg mb-6">
+          Type: {type === "monthly" ? "Monthly" : "One Time"}
         </p>
 
         <div className="flex gap-4 justify-center">
 
-          {/* Cancel */}
           <button
-            onClick={handleCancel}
-            className="px-6 py-3 rounded-xl border border-gray-400 text-gray-700 hover:bg-gray-100"
+            onClick={() => router.push("/")}
+            className="px-6 py-3 rounded-xl border"
           >
             Cancel
           </button>
 
-          {/* Proceed */}
           <button
-            className="px-6 py-3 rounded-xl bg-green-600 text-white hover:bg-green-700"
+            className="px-6 py-3 rounded-xl bg-green-600 text-white"
           >
             Proceed to Pay
           </button>
@@ -56,5 +50,6 @@ export default function PaymentPage(){
       </div>
 
     </div>
+
   )
 }

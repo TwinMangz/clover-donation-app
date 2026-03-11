@@ -1,55 +1,55 @@
 "use client"
 
-export const dynamic = "force-dynamic";
+import { useRouter } from "next/navigation"
 
-import { useSearchParams, useRouter } from "next/navigation"
+export default function Home() {
 
-export default function PaymentPage(){
-
-  const params = useSearchParams()
   const router = useRouter()
 
-  const amount = params.get("amount")
-  const type = params.get("type")
+  const items = [
+    { name: "Temple", id: "temple", img:"https://picsum.photos/200?1" },
+    { name: "Food", id: "food", img:"https://picsum.photos/200?2" },
+    { name: "Festival", id: "festival", img:"https://picsum.photos/200?3" },
+    { name: "Maintenance", id: "maintenance", img:"https://picsum.photos/200?4" },
+    { name: "Charity", id: "charity", img:"https://picsum.photos/200?5" }
+  ]
 
-  return(
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
 
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      {/* Logo */}
+      <img
+        src="https://picsum.photos/120"
+        className="mb-10 rounded-xl"
+      />
 
-      <div className="bg-white p-10 rounded-2xl shadow-lg text-center max-w-md w-full">
+      <div className="grid grid-cols-2 gap-6 w-full max-w-xl">
 
-        <h2 className="text-2xl font-bold mb-6">
-          Confirm Donation
-        </h2>
-
-        <p className="text-lg mb-2">
-          Amount: ${amount}
-        </p>
-
-        <p className="text-lg mb-6">
-          Type: {type === "monthly" ? "Monthly" : "One Time"}
-        </p>
-
-        <div className="flex gap-4 justify-center">
+        {items.map((item) => (
 
           <button
-            onClick={() => router.push("/")}
-            className="px-6 py-3 rounded-xl border"
+            key={item.id}
+            onClick={() => router.push(`/donate/${item.id}`)}
+            className="bg-white rounded-2xl shadow-md aspect-square p-3 hover:shadow-xl transition flex flex-col"
           >
-            Cancel
+
+            <div className="h-[80%] overflow-hidden rounded-xl">
+              <img
+                src={item.img}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <span className="text-lg font-semibold mt-2">
+              {item.name}
+            </span>
+
           </button>
 
-          <button
-            className="px-6 py-3 rounded-xl bg-green-600 text-white"
-          >
-            Proceed to Pay
-          </button>
-
-        </div>
+        ))}
 
       </div>
 
     </div>
-
   )
 }
